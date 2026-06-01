@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt      #繪製長條圖
 
 from movie import Movie
 from recommender import Recommender
@@ -11,11 +11,9 @@ plt.rcParams["axes.unicode_minus"] = False
 
 def load_data():
 
-    try:
+    try:                                  #資料讀取
 
-        df = pd.read_csv(
-            "netflix_titles.csv"
-        )
+        df = pd.read_csv("netflix_titles.csv")
 
         print("資料讀取成功")
 
@@ -30,7 +28,7 @@ def load_data():
 
 def clean_data(df):
 
-    df = df.drop_duplicates()
+    df = df.drop_duplicates()            #去除重複資料
 
     df["country"] = df["country"].fillna(
         "Unknown"
@@ -53,38 +51,30 @@ def show_basic_info(df):
 
     print(df.columns)
 
-
+#哪十個國家影片最多，長條圖:
 def analyze_country(df):
 
-    top_country = (
-        df["country"]
-        .value_counts()
-        .head(10)
-    )
+    top_country = (df["country"].value_counts().head(10))
 
     print("\n影片最多國家")
 
     print(top_country)
 
-    plt.figure(figsize=(10, 5))
+    plt.figure(figsize=(10, 5))            #圖表大小
 
-    top_country.plot(kind="bar")
+    top_country.plot(kind="bar")           #繪製長條圖
 
     plt.title("Top 10 Countries")
-
     plt.xlabel("Country")
-
     plt.ylabel("Count")
 
     plt.show()
 
-
+#熱門類型:圓餅圖
 def analyze_type(df):
 
-    movie_type = (
-        df["type"]
-        .value_counts()
-    )
+    #熱門類型
+    movie_type = (df["type"].value_counts())
 
     print(movie_type)
 
@@ -96,50 +86,49 @@ def analyze_type(df):
         autopct="%1.1f%%"
     )
 
-    plt.title(
-        "Movie vs TV Show"
-    )
+    plt.title("Movie vs TV Show")
 
     plt.show()
 
-
+#每個年份的作品數量:折線圖
 def analyze_year(df):
 
-    year_count = (
-        df["release_year"]
-        .value_counts()
-        .sort_index()
-    )
+    year_count = (df["release_year"].value_counts().sort_index())
 
     plt.figure(figsize=(12, 6))
 
     plt.plot(
         year_count.index,
-        year_count.values
+        year_count.values,
+        #marker="o",                     #增加線條與標記點
+        linewidth=2,
+        color = "steelblue"
     )
 
-    plt.title(
-        "Release Year Trend"
-    )
-
+    plt.title("Release Year Trend")
     plt.xlabel("Year")
-
     plt.ylabel("Count")
 
+    plt.grid(True, linestyle="--", alpha=0.5)
+
+    plt.tight_layout()
     plt.show()
 
 
 def analyze_genre(df):
 
-    genres = {}
+    genres = {}             #建立空字典儲存類型計數
 
+    #逐筆讀取listed_in欄位
     for item in df["listed_in"]:
 
+        # 跳過缺失值
         if pd.isna(item):
             continue
 
-        genre_list = item.split(",")
+        genre_list = item.split(",")        #將多類型拆開
 
+        #去除空白然後統計累加
         for genre in genre_list:
 
             genre = genre.strip()
@@ -181,6 +170,7 @@ def analyze_genre(df):
         "Top 10 Genres"
     )
 
+    plt.tight_layout()
     plt.show()
 
 
