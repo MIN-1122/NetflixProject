@@ -77,7 +77,7 @@ def analyze_country(df):
 #熱門類型:圓餅圖
 def analyze_type(df):
 
-    #熱門類型
+    #尋找熱門類型
     movie_type = (df["type"].value_counts())
 
     print(movie_type)
