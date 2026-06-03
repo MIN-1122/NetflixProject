@@ -86,7 +86,7 @@ def analyze_type(df):
         movie_type,
         labels=movie_type.index,       #文字為類別名稱
         autopct="%1.1f%%",              #取到小數點後一位
-        colors=["powderblue", "darkorange"]
+        colors=["steelblue", "firebrick"]
     )
 
     plt.title("Movie vs TV Show")
