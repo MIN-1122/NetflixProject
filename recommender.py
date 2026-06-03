@@ -5,12 +5,10 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 
 class Recommender:
-
     def __init__(self, dataframe):
         self.df = dataframe
 
     def recommend(self, movie_title):
-
         self.df["listed_in"] = self.df["listed_in"].fillna("")
 
         vectorizer = CountVectorizer()
@@ -46,7 +44,6 @@ class Recommender:
         count = 0
 
         for i in scores[1:6]:
-
             idx = i[0]
 
             print(
@@ -54,6 +51,5 @@ class Recommender:
             )
 
             count += 1
-
             if count == 5:
                 break

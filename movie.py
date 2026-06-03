@@ -1,5 +1,4 @@
 class Movie:
-
     def __init__(self, title, movie_type, country, genre):
         self.title = title
         self.movie_type = movie_type
